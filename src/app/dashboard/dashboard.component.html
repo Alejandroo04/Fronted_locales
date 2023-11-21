@@ -1,0 +1,44 @@
+<div class="dashboard">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="path-to-your-logo.png" alt="LocalAdmin">
+      </div>
+      <nav class="navigation">
+        <button (click)="navigateTo('dashboard')" class="nav-item">Home</button>
+        <button (click)="navigateTo('locales')" class="nav-item">Locales</button>
+        <button (click)="navigateTo('usuarios')" class="nav-item">Usuarios</button>
+        <button (click)="navigateTo('report')" class="nav-item">Report</button>
+        <button (click)="logout()" class="nav-item logout">Logout</button>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <section class="welcome-section">
+        <h1>Bienvenido</h1>
+        <p>Username</p>
+        <p>Admin</p>
+      </section>
+      <section class="stats-section">
+        <!-- Tarjetas de estadísticas -->
+        <div class="stat-card">
+          <div class="stat-icon">
+            <!-- Icono de locales -->
+          </div>
+          <div class="stat-info">
+            <p>Locales</p>
+            <p>3</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <!-- Icono de usuarios -->
+          </div>
+          <div class="stat-info">
+            <p>Usuarios</p>
+            <p>5</p>
+          </div>
+        </div>
+        <!-- Añadir más tarjetas según sea necesario -->
+      </section>
+    </main>
+  </div>
+  

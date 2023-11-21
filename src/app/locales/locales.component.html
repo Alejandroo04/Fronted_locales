@@ -1,0 +1,62 @@
+<div class="locales-container">
+    <header class="locales-header">
+    <button (click)="goToDashboard()" class="back-to-dashboard">Volver al Dashboard</button>
+    <h1>Locales</h1>
+    <button (click)="showForm = !showForm">Añadir Local</button>
+    </header>
+    
+    <div *ngIf="showForm">
+      <form [formGroup]="formLocal" (submit)="createLocal()">
+        
+        <input type="text" placeholder="Nombre del negocio" name="nombre" required formControlName="nombre">
+    
+        <input type="text" placeholder="Ubicación" name="ubicacion" required formControlName="ubicacion">
+        <select id="categoria" formControlName="categoria">
+          <option value="" disabled>Selecciona una categoría</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+        </select>
+        
+        <div *ngIf="formLocal.get('categoria')?.value">
+          <label for="subcategoria">Subcategoría:</label>
+          <select id="subcategoria" formControlName="subcategoria">
+            <option value="" disabled>Selecciona una subcategoría</option>
+            <option *ngFor="let subcategoria of formLocal.get('categoria')?.value.subcategorias" [value]="subcategoria.id">
+              {{ subcategoria.nombre }}
+            </option>
+          </select>
+        </div>
+        <button type="submit" [disabled]="formLocal.invalid">Crear Local</button>
+      </form>
+    </div>
+
+
+
+    <table class="locales-table">
+      <thead>
+        <tr>
+          <th>Nombre de negocio</th>
+          <th>Ubicación</th>
+          <th>Teléfono</th>
+          <th>Representante Legal</th>
+          <th>Categoría</th>
+          <th>Subcategoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let local of locales">
+          <td>{{ local.nombreNegocio }}</td>
+          <td>{{ local.ubicacion }}</td>
+          <td>{{ local.telefono }}</td>
+          <td>{{ local.representanteLegal }}</td>
+          <td>{{ local.categoria }}</td>
+          <td>{{ local.subcategoria }}</td>
+          <td>
+            <button (click)="editLocal(local)">✏️</button>
+            <button (click)="deleteLocal(local)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

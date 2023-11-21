@@ -1,0 +1,51 @@
+/* Estilos para centrar el .login-container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Asegúrate de que el contenedor padre ocupe toda la altura de la ventana gráfica */
+  }
+  
+  /* Estilos para el .login-container y sus elementos internos */
+  .login-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+  }
+  
+  .login-header h1 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .login-header p {
+    color: #666;
+  }
+  
+  .login-form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #008cba;
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  
+  .login-form button:hover {
+    background-color: #005f73;
+  }
+  

@@ -1,0 +1,47 @@
+/* Estilos para el contenedor del registro */
+.register-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+  }
+  
+  /* Estilos para los encabezados dentro del registro */
+  .register-header h1 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .register-header p {
+    color: #666;
+  }
+  
+  /* Estilos para los campos de formulario en el registro */
+  .register-form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Estilos para el botón en el formulario de registro */
+  .register-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #008cba;
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  
+  /* Cambio de color al pasar el mouse sobre el botón */
+  .register-form button:hover {
+    background-color: #005f73;
+  }
+  

@@ -1,0 +1,28 @@
+<div class="register-container">
+    <div class="register-header">
+      <h1>Hola!</h1>
+      <p>Regístrate para empezar</p>
+    </div>
+    <form [formGroup]="formRegister" class="register-form" (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <input formControlName="username" type="text" placeholder="Nombre Completo" required>
+      </div>
+      <div class="form-group">
+        <input formControlName="password" type="password" placeholder="Contraseña" required>
+      </div>
+      <div class="form-group">
+        <input formControlName="phone" type="text" placeholder="Teléfono" required>
+      </div>
+      <div class="form-group">
+        <select formControlName="role" required>
+          <option value="" disabled selected>Seleccione Su Rol</option>
+          <option value="vigilante">Vigilante</option>
+          <option value="encargado">Encargado</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="submit">Registrar</button>
+      </div>
+    </form>
+  </div>
+  
