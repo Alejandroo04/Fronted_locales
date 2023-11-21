@@ -8,6 +8,9 @@ import { CategoriaService } from '../services/categoria.service';
 import { Local } from './local.model';
 import { Categoria } from '../model/categoria.model';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { User } from '../model/user.mode';
+
 
 @Component({
   selector: 'app-locales',
@@ -15,18 +18,22 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './locales.component.html',
   styleUrl: './locales.component.css',
-  providers: [LocalesService, CategoriaService]
+  providers: [LocalesService, CategoriaService, AuthService]
 })
 export class LocalesComponent implements OnInit {
+  public localStorage: any;
   locales: Local[] = []; 
   categorias: Categoria[] = [];
+  usuarios: User[] = [];
   showForm: Boolean = false;
+  selectedCategoria: any; 
   public formLocal !: FormGroup;
 
   // // Un único constructor que inyecta todas las dependencias necesarias
   constructor(private router: Router, 
     private localService: LocalesService, 
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private categoriaService: CategoriaService
     ) {}
 
@@ -37,10 +44,19 @@ export class LocalesComponent implements OnInit {
       telefono: ['', Validators.required],
       representanteLegal: ['', Validators.required],
       categoria: ['', Validators.required],
-      subcategoria: ['', Validators.required]
+      subcategoria: ['', Validators.required],
+      encargado: ['', Validators.required],
+      status: ['', Validators.required]
     });
     // Cargar locales cuando el componente se inicializa
     this.loadLocales();
+    this.loadCategorias();
+    this.loadUsuarios();
+    const local = localStorage.getItem('usuarioActual');
+    if (local) {
+      this.localStorage= JSON.parse(local);
+    }else
+      throw "Error accediendo al localStorage"
   }
 
 
@@ -52,6 +68,11 @@ export class LocalesComponent implements OnInit {
   loadCategorias(): void{
     this.categoriaService.getCategorias().subscribe((data) =>{
       this.categorias = data;
+    });
+  }
+  loadUsuarios(): void{
+    this.authService.getUsuarios().subscribe((data) =>{
+      this.usuarios = data;
     });
   }
   
@@ -84,5 +105,16 @@ export class LocalesComponent implements OnInit {
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  onCategoriaChange() {
+    const categoriaId = this.formLocal.get('categoria')?.value;
+    if (categoriaId) {
+      console.log(categoriaId);
+      this.categoriaService.getCategoria(categoriaId).subscribe(data =>{
+        this.selectedCategoria = data;
+      });
+      console.log(this.selectedCategoria);
+    } 
   }
 }

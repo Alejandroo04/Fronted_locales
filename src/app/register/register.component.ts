@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { RoleService } from '../services/role.service';
+import { Role } from '../model/role.model';
 
 @Component({
   selector: 'app-register',
@@ -11,28 +13,38 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./register.component.css'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
-  providers: [AuthService]
+  providers: [AuthService, RoleService]
 })
 export class RegisterComponent implements OnInit{
 
   public formRegister !: FormGroup;
+  roles: Role[] = []; 
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, 
+              private authService: AuthService, 
+              private roleService: RoleService) { }
   
   ngOnInit(): void {
-
     this.formRegister = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
       phone: ['', Validators.required],
+      email: ['', Validators.required],
       role: ['', Validators.required]
     });
+
+    this.roleService.getRoles().subscribe(data => {
+      this.roles = data.filter(rol => rol.id !== 3);
+      console.log(this.roles);
+    });
+
+
   }
   
   onRegister() {
-    const {user, password, phone, role} = this.formRegister.value;
+    const {username, password, phone, role, email} = this.formRegister.value;
 
-    this.authService.register(user, password, phone, role).subscribe({
+    this.authService.register(username, password, phone, role, email).subscribe({
       next: () => {
         console.log("registro success");
         this.router.navigateByUrl('/login');

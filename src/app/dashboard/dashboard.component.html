@@ -1,7 +1,7 @@
 <div class="dashboard">
     <aside class="sidebar">
       <div class="logo">
-        <img src="path-to-your-logo.png" alt="LocalAdmin">
+        <img src="favicon.ico" alt="LocalAdmin">
       </div>
       <nav class="navigation">
         <button (click)="navigateTo('dashboard')" class="nav-item">Home</button>
@@ -14,8 +14,9 @@
     <main class="main-content">
       <section class="welcome-section">
         <h1>Bienvenido</h1>
-        <p>Username</p>
-        <p>Admin</p>
+        <div *ngIf="local && local.roles">
+          <p>{{ local.roles.name }}</p>
+        </div>
       </section>
       <section class="stats-section">
         <!-- Tarjetas de estadísticas -->

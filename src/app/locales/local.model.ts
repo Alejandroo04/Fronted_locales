@@ -1,4 +1,4 @@
-// src/app/locales/local.model.ts o src/app/models/local.model.ts
+
 
 export interface Local {
     id:number;

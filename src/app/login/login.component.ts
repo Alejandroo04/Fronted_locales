@@ -20,17 +20,17 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
     
   }
 
   submit(){
-    const {user, password} = this.formLogin.value;
+    const {email, password} = this.formLogin.value;
 
     if(this.formLogin.valid){
-      this.authService.login(user, password).subscribe({
+      this.authService.login(email, password).subscribe({
         next: () => this.router.navigateByUrl('/dashboard'),
         error: error => {console.log(error);}
       });
