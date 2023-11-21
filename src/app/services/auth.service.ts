@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { env } from '../../env';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +44,8 @@ export class AuthService {
         }));
         console.log(response.body);
         return response;
+      }),catchError((error) => {
+        return error;
       })
     );
   }

@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { User } from '../model/user.mode';
 
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-locales',
@@ -29,6 +31,19 @@ export class LocalesComponent implements OnInit {
   showForm: Boolean = false;
   selectedCategoria: any; 
   public formLocal !: FormGroup;
+  editando: Boolean = false;
+
+  private  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
   
 
   // // Un único constructor que inyecta todas las dependencias necesarias
@@ -41,6 +56,7 @@ export class LocalesComponent implements OnInit {
 
   ngOnInit() {
     this.formLocal = this.formBuilder.group({
+      id: [''],
       nombre: ['', Validators.required],
       ubicacion: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -50,11 +66,17 @@ export class LocalesComponent implements OnInit {
       encargado: ['', Validators.required],
       status: ['', Validators.required]
     });
-    // Cargar locales cuando el componente se inicializa
-    this.loadLocales();
-    this.loadCategorias();
-    this.loadUsuarios();
-    this.loadEstados();
+
+    Swal.fire({
+      title: "Cargando información!",
+      didOpen: () => {
+        Swal.showLoading();
+        // Load data when the component initializes
+        this.loadData().then(() => {
+          Swal.close(); // Close the loading spinner after data is loaded
+        });
+      },
+    });
     const local = localStorage.getItem('usuarioActual');
     if (local) {
       this.localStorage= JSON.parse(local);
@@ -62,23 +84,41 @@ export class LocalesComponent implements OnInit {
       throw "Error accediendo al localStorage"
   }
 
+  private async loadData(): Promise<void> {
+    try {
+      // Load your data here
+      await this.loadLocales();
+      await this.loadCategorias();
+      await this.loadUsuarios();
+      await this.loadEstados();
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Handle the error as needed (show an error message, log, etc.)
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrió un error al cargar la información. Por favor, inténtalo nuevamente.',
+      });
+    }
+  }
 
-  loadLocales(): void{
+
+  private async loadLocales(): Promise<void> {
     this.localService.getLocales().subscribe((data) =>{
       this.locales = data
     });
   }
-  loadCategorias(): void{
+  private async loadCategorias(): Promise<void>{
     this.categoriaService.getCategorias().subscribe((data) =>{
       this.categorias = data;
     });
   }
-  loadUsuarios(): void{
+  private async loadUsuarios(): Promise<void>{
     this.authService.getUsuarios().subscribe((data) =>{
       this.usuarios = data;
     });
   }
-  loadEstados(): void{
+  private async loadEstados(): Promise<void>{
     this.localService.getEstados().subscribe((data) =>{
       console.log(data);
       this.estados = data;
@@ -86,29 +126,90 @@ export class LocalesComponent implements OnInit {
   }
   
   createLocal(): void {
-
     if(this.formLocal.valid){
-      const nuevoLocal = this.formLocal.value;
+      if(!this.editando){
+
+        const nuevoLocal = this.formLocal.value;
+        
+        this.localService.createLocal(nuevoLocal).subscribe({
+          next: () =>{
+            this.loadLocales();
+            this.Toast.fire({
+              icon: "success",
+              title: "Local creado correctamente"
+            });
+            this.formLocal.reset();
+          }, error: error => {
+            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error.message,
+            });
+          }
+        });
       
-      this.localService.createLocal(nuevoLocal).subscribe(() =>{
-        this.loadLocales();
-        this.formLocal.reset();
-      });
-    
+      }else{
+      
+        const local = this.formLocal.value;
+        
+          // Implementación para editar un local
+        this.localService.updateLocal(local.id, local).subscribe({
+          next: () =>{
+            this.Toast.fire({
+              icon: "success",
+              title: "Local actualizado correctamente"
+            });
+            this.loadLocales();
+          },error: error => {
+            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error.message,
+            });
+          }
+        });
+        this.editando = false;
+      }
     }
   }
 
   editLocal(local: Local) {
-    // Implementación para editar un local
-    this.localService.updateLocal(local.id, local).subscribe(() =>{
-      this.loadLocales();
+
+    this.formLocal.patchValue({
+      id: local.id,
+      nombre: local.nombre,
+      ubicacion: local.ubicacion,
+      telefono: local.telefono,
+      representante: local.representante_legal.id, 
+      categoria: local.categoria_id,
+      subcategoria: local.subcategoria_id,
+      encargado: local.encargado_id,
+      status: local.estado_id
     });
+    this.showForm=true
+    this.editando = true;
+    
   }
 
   deleteLocal(local: Local) {
     // Implementación para eliminar un local
-    this.localService.deleteLocal(local.id).subscribe(() =>{
-      this.loadLocales();
+    this.localService.deleteLocal(local.id).subscribe({
+      next: () =>{
+        this.Toast.fire({
+          icon: "success",
+          title: "Local Eliminado correctamente"
+        });
+        this.loadLocales();
+      },error: error => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
+      }
     });
   }
 

@@ -39,11 +39,10 @@
           </select>
 
           
-          <button type="submit" [disabled]="formLocal.invalid">Crear Local</button>
+          <button type="submit" [disabled]="formLocal.invalid">Guardar Información</button>
         </form>
       </div>
     }
-
 
     <table class="locales-table">
       <thead>
@@ -62,13 +61,9 @@
           <td>{{ local.nombre }}</td>
           <td>{{ local.ubicacion }}</td>
           <td>{{ local.telefono }}</td>
-          <code *ngFor="let usuario of usuarios">
-            <td *ngIf="+local.encargado_id === usuario.id">
-                {{ usuario.name }}
-            </td>
-          </code>
-          <td>{{ local.categoria_id }}</td>
-          <td>{{ local.subcategoria_id }}</td>
+          <td>{{ local.encargado.name }}</td>
+          <td>{{ local.category.name }}</td>
+          <td>{{ local.subcategory.nombre }}</td>
           @if(localStorage.roles.id == 3){
             <td>
               <button (click)="editLocal(local)">✏️</button>
