@@ -2,12 +2,14 @@
 
 export interface Local {
     id:number;
-    nombreNegocio: string;
+    nombre: string;
     ubicacion: string;
     telefono: string;
-    representanteLegal: string;
-    categoria: string;
-    subcategoria: string;
+    representante: string;
+    categoria_id: string;
+    subcategoria_id: string;
+    encargado_id: string;
+    estado: string;
     // Agrega cualquier otra propiedad que necesites
   }
   

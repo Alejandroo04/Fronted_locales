@@ -25,9 +25,11 @@ export class LocalesComponent implements OnInit {
   locales: Local[] = []; 
   categorias: Categoria[] = [];
   usuarios: User[] = [];
+  estados: any;
   showForm: Boolean = false;
   selectedCategoria: any; 
   public formLocal !: FormGroup;
+  
 
   // // Un único constructor que inyecta todas las dependencias necesarias
   constructor(private router: Router, 
@@ -39,10 +41,10 @@ export class LocalesComponent implements OnInit {
 
   ngOnInit() {
     this.formLocal = this.formBuilder.group({
-      nombreNegocio: ['', Validators.required],
+      nombre: ['', Validators.required],
       ubicacion: ['', Validators.required],
       telefono: ['', Validators.required],
-      representanteLegal: ['', Validators.required],
+      representante: ['', Validators.required],
       categoria: ['', Validators.required],
       subcategoria: ['', Validators.required],
       encargado: ['', Validators.required],
@@ -52,6 +54,7 @@ export class LocalesComponent implements OnInit {
     this.loadLocales();
     this.loadCategorias();
     this.loadUsuarios();
+    this.loadEstados();
     const local = localStorage.getItem('usuarioActual');
     if (local) {
       this.localStorage= JSON.parse(local);
@@ -73,6 +76,12 @@ export class LocalesComponent implements OnInit {
   loadUsuarios(): void{
     this.authService.getUsuarios().subscribe((data) =>{
       this.usuarios = data;
+    });
+  }
+  loadEstados(): void{
+    this.localService.getEstados().subscribe((data) =>{
+      console.log(data);
+      this.estados = data;
     });
   }
   

@@ -8,11 +8,11 @@
       <div *ngIf="showForm">
         <form [formGroup]="formLocal" (submit)="createLocal()">
           
-          <input type="text" placeholder="Nombre del negocio" name="nombre" required formControlName="nombreNegocio">
+          <input type="text" placeholder="Nombre del negocio" name="nombre" required formControlName="nombre">
       
           <input type="text" placeholder="Ubicación" name="ubicacion" required formControlName="ubicacion">
           <input type="number" placeholder="telefono" name="telefono" required formControlName="telefono">
-          <select id="representanteLegal" formControlName="representanteLegal">
+          <select id="representanteLegal" formControlName="representante">
             <option value="" disabled>Selecciona una responsable</option>
             <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.name }}</option>
           </select>
@@ -20,7 +20,7 @@
             <option value="" disabled>Selecciona una categoría</option>
             <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.name }}</option>
           </select>
-          <div *ngIf="formLocal.get('categoria')?.value">
+          <div *ngIf="selectedCategoria">
             <label for="subcategoria">Subcategoría:</label>
             <select id="subcategoria" formControlName="subcategoria">
               <option value="" disabled>Selecciona una subcategoría</option>
@@ -29,6 +29,14 @@
               </option>
             </select>
           </div>
+          <select id="encargado" formControlName="encargado">
+            <option value="" disabled>Selecciona una encargado</option>
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.name }}</option>
+          </select>
+          <select id="status" formControlName="status">
+            <option value="" disabled>Selecciona una estado</option>
+            <option *ngFor="let estado of estados" [value]="estado.id">{{ estado.nombre }}</option>
+          </select>
 
           
           <button type="submit" [disabled]="formLocal.invalid">Crear Local</button>
@@ -43,7 +51,7 @@
           <th>Nombre de negocio</th>
           <th>Ubicación</th>
           <th>Teléfono</th>
-          <th>Representante Legal</th>
+          <th>Encargado</th>
           <th>Categoría</th>
           <th>Subcategoría</th>
           <th>Acciones</th>
@@ -51,12 +59,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let local of locales">
-          <td>{{ local.nombreNegocio }}</td>
+          <td>{{ local.nombre }}</td>
           <td>{{ local.ubicacion }}</td>
           <td>{{ local.telefono }}</td>
-          <td>{{ local.representanteLegal }}</td>
-          <td>{{ local.categoria }}</td>
-          <td>{{ local.subcategoria }}</td>
+          <code *ngFor="let usuario of usuarios">
+            <td *ngIf="+local.encargado_id === usuario.id">
+                {{ usuario.name }}
+            </td>
+          </code>
+          <td>{{ local.categoria_id }}</td>
+          <td>{{ local.subcategoria_id }}</td>
           @if(localStorage.roles.id == 3){
             <td>
               <button (click)="editLocal(local)">✏️</button>

@@ -30,6 +30,9 @@ export class LocalesService {
   getLocales(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}api/locales`, this.getHeaders());
   }
+  getEstados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}api/estados`, this.getHeaders());
+  }
 
   createLocal(local: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}api/locales`, local, this.getHeaders());
