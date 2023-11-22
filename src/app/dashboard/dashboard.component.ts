@@ -5,18 +5,23 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../model/user.mode';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LocalesComponent } from '../locales/locales.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, LocalesComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   providers: [AuthService]
 })
 export class DashboardComponent implements OnInit{
   public local: any;
+  locales?: number;
+  usuarios?: number;
+
+
 
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -26,14 +31,5 @@ export class DashboardComponent implements OnInit{
       this.local= JSON.parse(local);
     }else
       throw "Error accediendo al localStorage"
-  }
-
-  navigateTo(route: string) {
-    this.router.navigate([route]);
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }
