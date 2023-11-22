@@ -17,6 +17,7 @@ export interface Local {
     category: Categoria;
     subcategory: Subcategoria;
     estado_id: number;
+    estado: any;
     // Agrega cualquier otra propiedad que necesites
   }
   

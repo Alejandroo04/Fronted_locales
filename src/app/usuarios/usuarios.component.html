@@ -1,0 +1,57 @@
+<div class="usuarios-container">
+    <header class="usuarios-header">
+    <h1>Usuarios</h1>
+    <button (click)="showForm = true; formUsuario.reset(); editando= false" *ngIf="localStorage.roles.id == 3">Añadir Usuario</button>
+    </header>
+    @if(localStorage.roles.id == 3){
+      <div *ngIf="showForm">
+        <form [formGroup]="formUsuario" (submit)="createUsuario()">
+
+          <input type="text" placeholder="Nombres" name="nombre" required formControlName="name">
+      
+          <input type="text" placeholder="Apellidos" name="apellidos" required formControlName="last_name">
+          <input type="number" placeholder="Teléfono" name="telefono" required formControlName="phone">
+          <input type="text" placeholder="Email" name="email" required formControlName="email">
+          <select id="rol" formControlName="rol_id">
+            <option value="" disabled>Selecciona una rol</option>
+            <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
+          </select>
+
+
+          
+          <button type="submit" [disabled]="formUsuario.invalid">Guardar Información</button>
+        </form>
+      </div>
+      <br/>
+    }
+
+    <table class="usuarios-table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.name }}</td>
+          <td>{{ usuario.last_name }}</td>
+          <td>{{ usuario.phone }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.rol_id }}</td>
+          @if(localStorage.roles.id == 3){
+            <td>
+              <button (click)="editUsuario(usuario)">✏️</button>
+              <button (click)="deleteUsuario(usuario)">🗑️</button>
+            </td>
+          }
+        </tr>
+      </tbody>
+    </table>
+  </div>

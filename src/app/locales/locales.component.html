@@ -1,6 +1,5 @@
 <div class="locales-container">
     <header class="locales-header">
-    <button (click)="goToDashboard()" class="back-to-dashboard">Volver al Dashboard</button>
     <h1>Locales</h1>
     <button (click)="showForm = !showForm" *ngIf="localStorage.roles.id == 3">Añadir Local</button>
     </header>
@@ -42,6 +41,7 @@
           <button type="submit" [disabled]="formLocal.invalid">Guardar Información</button>
         </form>
       </div>
+      <br/>
     }
 
     <table class="locales-table">
@@ -53,6 +53,7 @@
           <th>Encargado</th>
           <th>Categoría</th>
           <th>Subcategoría</th>
+          <th>Estados</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -64,6 +65,7 @@
           <td>{{ local.encargado.name }}</td>
           <td>{{ local.category.name }}</td>
           <td>{{ local.subcategory.nombre }}</td>
+          <td>{{ local.estado.nombre }}</td>
           @if(localStorage.roles.id == 3){
             <td>
               <button (click)="editLocal(local)">✏️</button>

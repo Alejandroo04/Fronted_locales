@@ -10,7 +10,8 @@ import { AuthService } from './services/auth.service';
   standalone: true,
   imports: [CommonModule, HttpClientModule, LocalesComponent, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [AuthService]
 })
 export class AppComponent implements OnInit {
   title = 'LocalAdmin';
@@ -30,5 +31,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  ir(ruta: string){
+    this.router.navigate([ruta]);
   }
 }

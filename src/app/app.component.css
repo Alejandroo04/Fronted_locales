@@ -1,10 +1,82 @@
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #007991, #78ffd6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
+.dashboard {
+  display: flex;
+  height: 100vh;
+
+}
+
+.sidebar {
+  background-color: #007991; /* Ajusta el color según tu diseño */
+  padding: 20px;
+  width: 200px; /* O el ancho que prefieras */
+}
+
+.logo img {
+  max-width: 100%;
+  /* Ajusta el tamaño según sea necesario */
+}
+
+.navigation {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.nav-item, button.nav-item { /* Ajuste para aplicar estilos a ambos, enlaces y botones */
+  background: none;
+  border: none;
+  color: white;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  margin: 5px 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-item:hover, .nav-item:focus, button.nav-item:hover, button.nav-item:focus { /* Estilos para hover y focus en enlaces y botones */
+  background-color: #78ffd6;
+  outline: none;
+}
+
+.nav-item.logout, button.nav-item.logout { /* Estilos específicos para el botón de logout */
+  margin-top: 20px;
+  color: #ff6b6b;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.welcome-section h1 {
+  /* Estilos para el título de bienvenida */
+}
+
+.welcome-section p {
+  /* Estilos para el texto de bienvenida */
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 150px; /* Ajusta el ancho según sea necesario */
+  text-align: center;
+}
+
+.stat-icon {
+  /* Estilos para los iconos de las tarjetas */
+}
+
+.stat-info p {
+  /* Estilos para el texto dentro de las tarjetas */
+}

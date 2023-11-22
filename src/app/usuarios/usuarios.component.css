@@ -1,0 +1,86 @@
+.usuarios-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  .usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .usuarios-header h1 {
+    font-size: 24px;
+  }
+  
+  button {
+    background-color: #007991; /* Color del botón que concuerde con el sidebar */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #005f73; /* Color más oscuro al pasar el ratón */
+  }
+  
+  .usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .usuarios-table thead {
+    background-color: #007991;
+    color: white;
+  }
+  
+  .usuarios-table th,
+  .usuarios-table td {
+    text-align: left;
+    padding: 12px 15px;
+  }
+  
+  .usuarios-table tbody tr:nth-child(even) {
+    background-color: #f0f0f0;
+  }
+  
+  .usuarios-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Estilos para los botones de acción en la tabla */
+  .usuarios-table .action-button {
+    font-size: 16px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px 10px;
+  }
+  
+  /* Estilos para los iconos de editar y eliminar */
+  .edit-icon {
+    color: #007991;
+  }
+  
+  .delete-icon {
+    color: #ff6b6b;
+  }
+  .back-to-dashboard {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #007991; /* Ajusta a tus colores */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Puedes agregar :hover y otros pseudo-clases para mejorar la interactividad */
+  .back-to-dashboard:hover {
+    background-color: #005f73; /* Un tono más oscuro para el efecto hover */
+  }
+  
